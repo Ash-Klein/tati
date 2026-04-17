@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人格测试 - 发现真实的自己</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --bg-start: #f0f1ff;
+            --bg-end: #fdf2f8;
+            --card-bg: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-light: #9ca3af;
+            --border: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+            --radius-sm: 8px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0 30px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 40px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        /* 欢迎页样式 */
+        .welcome-info {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .welcome-info h3 {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+
+        .welcome-info ul {
+            list-style: none;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .welcome-info li {
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .welcome-info li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        /* 进度条 */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+
+        /* 题目样式 */
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .option-item:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+            transform: translateX(4px);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+        }
+
+        /* 导航按钮 */
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .nav-buttons .btn {
+            flex: 1;
+        }
+
+        /* 结果页样式 */
+        .result-content {
+            text-align: center;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .result-type {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: 4px;
+        }
+
+        .result-name {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .result-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .result-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .result-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.8;
+            text-align: left;
+            padding: 0 8px;
+        }
+
+        .dimension-chart {
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .dimension-item {
+            margin-bottom: 16px;
+        }
+
+        .dimension-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .dimension-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .dimension-name {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .dimension-value {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .dimension-bar {
+            height: 10px;
+            background: var(--border);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .dimension-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+            transition: width 0.8s ease;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--primary-dark);
+        }
+
+        .privacy-note {
+            margin-top: 8px;
+            font-size: 0.8rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px;
+            }
+
+            .header {
+                padding: 30px 0 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                padding: 28px 24px;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+
+            .result-type {
+                font-size: 2rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* 页面隐藏 */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* 确认弹窗 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .modal p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-buttons .btn {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>tati人格测试</h1>
+            <p>别人有的题我们塔也要有</p>
+        </header>
+
+        <main class="main-content">
+            <!-- 首页 -->
+            <div id="page-home" class="page active">
+                <div class="card">
+                    <h2 class="card-title">欢迎参与人格测试</h2>
+                    
+                    <div class="welcome-info">
+                        <h3>测试须知</h3>
+                        <ul>
+                            <li>共有 <strong>16 道</strong>选择题</li>
+                            <li>每道题请根据第一反应选择</li>
+                            <li>可随时返回修改之前的答案</li>
+                            <li>本测试为demo版,未来将添加更多人物</li>
+                            <li>如有bug和不准之处,私密马赛</li>
+                        </ul>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="startTest()">
+                        开始测试
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 测试页 -->
+            <div id="page-test" class="page">
+                <div class="card">
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span id="progress-text">第 1/16 题</span>
+                            <span id="progress-percent">5%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill" style="width: 5%"></div>
+                        </div>
+                    </div>
+
+                    <h2 id="question-text" class="question-text"></h2>
+
+                    <div id="options-list" class="options-list"></div>
+
+                    <div class="nav-buttons">
+                        <button id="btn-prev" class="btn btn-secondary" onclick="prevQuestion()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 12H5M12 19l-7-7 7-7"/>
+                            </svg>
+                            上一题
+                        </button>
+                        <button id="btn-next" class="btn btn-primary" onclick="nextQuestion()">
+                            下一题
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 结果页 -->
+            <div id="page-result" class="page">
+                <div class="card">
+                    <div class="result-content">
+                        <p class="result-label">你的人格类型是:</p>
+                        <div id="result-type" class="result-type"></div>
+                        <div id="result-name" class="result-name"></div>
+                        <div id="result-image" class="result-image"></div>
+                        <p id="result-desc" class="result-desc"></p>
+                    </div>
+
+                    <div class="dimension-chart">
+                        <h3 style="margin-bottom: 16px; font-size: 1rem; color: var(--text-primary);">各维度得分</h3>
+                        <div id="dimension-chart"></div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="goHome()">
+                        返回首页
+                    </button>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <p>基于塔希里亚故事集设计</p>
+            <p class="privacy-note">
+                你的数据仅保存在本地浏览器中 · 
+                <a href="https://github.com" target="_blank">GitHub</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- 确认弹窗 -->
+    <div id="modal-confirm" class="modal-overlay">
+        <div class="modal">
+            <h3>确认提交？</h3>
+            <p>完成测试后将无法修改答案，确定要提交吗？</p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+                <button class="btn btn-primary" onclick="confirmSubmit()">确认提交</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 数据结构定义 ====================
+        
+        // 人格类型定义 - 8维特征向量
+        const PERSONALITY_TYPES = {
+            'SBLS': {
+                name: '疯狗',
+                code: 'SBLS',
+                vector: [-1,-1,0.5,-1,-0.5,3,1,4],
+                description: '“想做法师，哪怕是最蹩脚最愚蠢的法师——只要是法师就行了。”'
+            },
+            'YAGO': {
+                name: '厨子',
+                code: 'YAGO',
+                vector: [1,-1,3,-1,1,-1,5,2],
+                description: '“一个人到底要有多大的力量，才能握紧自己的幸福？”'
+            },
+            'AMDR': {
+                name: '诗人',
+                code: 'AMDR',
+                vector: [1,2,0.5,1.5,-0.5,-1,6,3],
+                description: '“真正的力量，是看清一切之后依然选择前行。”'
+            },
+            'PRKA': {
+                name: '天才',
+                code: 'PRKA',
+                vector: [-1,1,-1,3,0,0.5,0,0],
+                description: '“这位伟大的天才是如此的睿智，一生都无法欺骗自己。”'
+            }
+        };
+
+        // 维度定义（6个维度对应8维向量的前6个）
+        const DIMENSIONS = [
+            { name: 'Worth/力量', min: -10, max: 10 },
+            { name: 'Understand/洞察', min: -10, max: 10 },
+            { name: 'Mercy/悲悯', min: -10, max: 10 },
+            { name: 'Intution/天赋', min: -10, max: 10 },
+            { name: 'Allegiance/信仰', min: -10, max: 10 },
+            { name: 'Obsession/执念', min: -10, max: 10 }
+        ];
+
+        // 测试题目 - 扩展数据结构
+        const QUESTIONS = [
+            // 第1题 - 外向性/内向性
+            {
+                text: '你认为力量的意义是什么？',
+                options: [
+                    { text: '给自己更多选择，不必向命运低头', effects: [-3, 0, 0, 0, 0, 1] },
+                    { text: '守护重要的人 ', effects: [2, 0, 1, 0, 0, 0] },
+                    { text: '力量本身就很有意义', effects: [-1, 0, 0, 0, 1, 0] },
+
+                ]
+            },
+            // 第2题 - 直觉性/实感
+            {
+                text: '你的力量来源于？',
+                options: [
+                    { text: '强烈的执念和渴望 ', effects: [-3, 0, 0, 0, 0, 0] },
+                    { text: '智慧,洞察力和思考', effects: [3, 2, 0, 0, 0, 0] },
+                    { text: '无与伦比的天赋', effects: [1, 0, 0, 2, 0, 0] }
+                ]
+            },
+            // 第3题 - 思考性/情感性
+            {
+                text: '面对无从逃离的命运，真正的强大是？',
+                options: [
+                    { text: '承受命运准备的每一道菜', effects: [3, 0, 5, 0, 0, 0] },
+                    { text: '去抗争，去改变,与天斗其乐无穷', effects: [-3, 0, 0, 0, 1, 0] },
+                    { text: ' 团结身边的人，大家一起度过难关', effects: [4, 0, 1, 0, 0, 0] }
+                ]
+            },
+            // 第4题 - 感知性/判断性
+            {
+                text: '如果你穿越到塔希里亚世界，你希望穿越到',
+                options: [
+                    { text: '混沌纪元一众神纪元前期，神与魔鬼行于地上，古老的传说触手可及', effects: [0, -3, 0, 0, 0, 0] },
+                    { text: '众神纪元后期一英雄纪元前期，众神隐去，凡人主导世界的命运', effects: [-1,-1, 0, 5, 0, 2] },
+                    { text: '魔法编年史时期—源符法轨的发现，使魔法不再神秘,塔希里亚世界步入现代化', effects: [0, 4, 0, 0, 0, 0] }
+                ]
+            },
+            // 第5题 - 综合性
+            {
+                text: '悲伤大剧院上映了一出关于小精灵的戏剧，你更容易被它的哪一面吸引？',
+                options: [
+                    { text: '情节、画面和情感，享受故事本身', effects: [0, -3, 0, 0, 0, 0] },
+                    { text: '故事背后的隐喻和逻辑', effects: [0, 3, 0, 0, 0, 0] },
+                    { text: '我忙着研究源符,没空去看戏剧', effects: [0, 1, 1, 0, 0, 0] },
+                
+                ]
+            },
+            // 第6题 - 外向性
+            {
+                text: '魔预者督尼向你提供了一份契约，条件很诱人，你会签吗？',
+                options: [
+                    { text: '遵循内心感受，感觉没问题就签', effects: [0, -3, 0, 0, -2, 0] },
+                    { text: '仔细分析所有条款再决定', effects: [0, 1, 0, 0, -1, 0] },
+                    { text: '你不可能在炼狱语的使用中胜过魔鬼,直接不签', effects: [0, 2, 0, 0, 2, 0] }
+                ]
+            },
+            // 第7题 - 直觉性
+            {
+                text: '你对于大团圆结局的看法是',
+                options: [
+                    { text: '包饺子就是最好的', effects: [0, -1, 3, 0, 1, 0] },
+                    { text: '无聊且不切实际', effects: [0, -1, -3, 0, 0, 0] },
+                    { text: '没什么特别的看法', effects: [0, 0, -1, 0, 0, 0] }
+                ]
+            },
+            // 第8题 - 思考性
+            {
+                text: '你的朋友做了一个明显会伤害自己的决定，你会？',
+                options: [
+                    { text: '坚决阻止他', effects: [0, 0, 3, 0, 0, 0] },
+                    { text: '顺其自然', effects: [0, 0, -3, 0, 1, 0] },
+                    { text: '了解他这样做的原因', effects: [0, 2, 3, 0, 0, 0] }
+                ]
+            },
+            // 第9题 - 感知性
+            {
+                text: '对于吴大的观点“那怕只是微不足道的路人，也尽量做到＇他也是一个人＇"',
+                options: [
+                    { text: '认同', effects: [0, 0, 2, 0, 0, 0] },
+                    { text: '不认同', effects: [0, 0, -4, 0, 0, 0] },
+                    { text: '哪里有这句话', effects: [0, 0, -8, 0, 0, 0] }
+                ]
+            },
+            // 第10题 - 情感性
+            {
+                text: '你如何看待天赋？',
+                options: [
+                    { text: '天赋就是一切', effects: [0, 0, 0, 5,1, 0] },
+                    { text: '天赋不如后天努力重要', effects: [0, 0, 0, -4, -1, 0] },
+                    { text: '有天赋也没用', effects: [0, 0, 0, 0, 1,0] }
+                ]
+            },
+            // 第11题 - 独立性
+            {
+                text: '从长远看，源符理论会毁掉魔法',
+                options: [
+                    { text: '是的', effects: [0, 0, 0, 2, 0, 5] },
+                    { text: '不是', effects: [0, 0, 0, -3, -1, 0] },
+                    { text: '无法判断', effects: [0, 0, 0, 0, 0, 0] }
+                ]
+            },
+            // 第12题 - 综合维度
+            {
+                text: '在塔希里亚世界里,你更偏向',
+                options: [
+                    { text: '众神一方', effects: [0, 0,0,0,3,0] },
+                    { text: '魔鬼一方', effects: [0, 0,0,0,-2,0] },
+                    { text: '没有偏好', effects: [0, 0,0,0,0,0] },
+                   
+                ]
+            },
+            // 第13题 - 外向性
+            {
+                text: ' 你觉得更重要的是？',
+                options: [
+                    { text: '信仰，奉献，美德', effects: [0, 0, 1, 0, 4, 0] },
+                    { text: '思考，独立，自由意志', effects: [0, 0, 0, 0, -3, 1] },
+                    { text: '中立', effects: [0,0,0,0,0,0] },
+                    
+                ]
+            },
+            // 第14题 - 直觉性
+            {
+                text: '小时候的梦想，你现在？',
+                options: [
+                    { text: '仍然坚持着，或已经实现了', effects: [0, 0, 0, 0, -1, 5] },
+                    { text: '把它藏在心里，但做着更务实的事情', effects: [0, 0, 0, 0, 1, -2] },
+                    { text: '已经放下了，无法理解过去的自己', effects: [0, 0, -1, 0, 1, -4] }
+                ]
+            },
+            // 第15题 - 思考性
+            {
+                text: '对于执念的看法',
+                options: [
+                    { text: '执念是燃料，一切伟业的驱动力', effects: [0, 0, 0, 0, 0, 4] },
+                    { text: '执念是双刃剑，需要理性约束', effects: [0, 1, 0, 0, 0, 1] },
+                    { text: '执念是枷锁，放下才能自由', effects: [0, -1, 0, 0, 0, -4] }
+                ]
+            },
+            // 第16题 - 感知性
+            {
+                text: '你认为你的灵魂魔法会是什么颜色？',
+                options: [
+                    { text: '赤-源符：萨安,元素类魔法', effects: [0,0,0,0,0,0] },
+                    { text: '橙-源符：菲塔,解识类魔法', effects:[0,0,0,0,0,0] },
+                    { text: '黄-源符：伊兹,咒造类魔法', effects: [0,0,0,0,0,0]   },
+                    { text: '绿-源符：度坎,召唤类魔法', effects: [0,0,0,0,0,0] },
+                    { text: '青-源符：铜帕,力场类魔法', effects: [0,0,0,0,0,0]},
+                    { text: '蓝-源符：迪兰,幻术类魔法', effects: [0,0,0,0,0,0]},
+                    { text: '紫-源符：厄尼,精神类魔法', effects: [0,0,0,0,0,0]}
+                ]
+            },
+        ];
+
+        // ==================== 应用状态 ====================
+        
+        let currentQuestion = 0;
+        let userScores = new Array(6).fill(0); // 6维分数
+        let userVector = new Array(8).fill(0); // 8维向量（用于计算匹配度）
+        let userAnswers = new Array(QUESTIONS.length).fill(null);
+
+        // ==================== 核心函数 ====================
+
+        function showPage(pageId) {
+            console.log('showPage called with:', pageId);
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            const targetPage = document.getElementById(pageId);
+            if (!targetPage) {
+                console.error('Page not found:', pageId);
+                return;
+            }
+            targetPage.classList.add('active');
+        }
+
+        function startTest() {
+            currentQuestion = 0;
+            userScores = new Array(6).fill(0);
+            userVector = new Array(8).fill(0);
+            userAnswers = new Array(QUESTIONS.length).fill(null);
+            
+            showPage('page-test');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            // 边界检查
+            if (currentQuestion < 0) currentQuestion = 0;
+            if (currentQuestion >= QUESTIONS.length) currentQuestion = QUESTIONS.length - 1;
+            
+            const question = QUESTIONS[currentQuestion];
+            const total = QUESTIONS.length;
+            
+            document.getElementById('progress-text').textContent = `第 ${currentQuestion + 1}/${total} 题`;
+            document.getElementById('progress-percent').textContent = `${Math.round((currentQuestion + 1) / total * 100)}%`;
+            document.getElementById('progress-fill').style.width = `${(currentQuestion + 1) / total * 100}%`;
+            
+            document.getElementById('question-text').textContent = question.text;
+            
+            const optionsList = document.getElementById('options-list');
+            optionsList.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'option-item';
+                if (userAnswers[currentQuestion] === index) {
+                    optionEl.classList.add('selected');
+                }
+                optionEl.textContent = option.text;
+                optionEl.onclick = () => selectOption(index);
+                optionsList.appendChild(optionEl);
+            });
+            
+            document.getElementById('btn-prev').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+            
+            if (currentQuestion === total - 1) {
+                document.getElementById('btn-next').textContent = '查看结果';
+                document.getElementById('btn-next').innerHTML = `
+                    查看结果
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                `;
+            } else {
+                document.getElementById('btn-next').innerHTML = `
+                    下一题
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                `;
+            }
+        }
+
+        function selectOption(index) {
+            // 边界检查
+            if (currentQuestion < 0 || currentQuestion >= QUESTIONS.length) {
+                console.error('Invalid currentQuestion:', currentQuestion);
+                return;
+            }
+            
+            const prevAnswer = userAnswers[currentQuestion];
+            const prevOption = QUESTIONS[currentQuestion].options[prevAnswer];
+            
+            if (prevOption) {
+                for (let i = 0; i < 6; i++) {
+                    userScores[i] -= prevOption.effects[i];
+                }
+            }
+            
+            userAnswers[currentQuestion] = index;
+            const option = QUESTIONS[currentQuestion].options[index];
+            
+            for (let i = 0; i < 6; i++) {
+                userScores[i] += option.effects[i];
+            }
+            
+            userVector = [...userScores, userScores[1], userScores[2] * 0.5 + userScores[0] * 0.5, userScores[3] + userScores[0]];
+            
+            document.querySelectorAll('.option-item').forEach((el, i) => {
+                el.classList.toggle('selected', i === index);
+            });
+            
+            if (currentQuestion < QUESTIONS.length - 1) {
+                setTimeout(() => {
+                    currentQuestion++;
+                    renderQuestion();
+                }, 200);
+            }
+        }
+
+        function nextQuestion() {
+            console.log('nextQuestion called', 'currentQuestion:', currentQuestion, 'length:', QUESTIONS.length);
+            if (userAnswers[currentQuestion] === null) {
+                alert('请先选择一个答案');
+                return;
+            }
+            
+            console.log('About to call showResult');
+            showResult();
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function showResult() {
+            console.log('showResult called');
+            console.log('userVector:', userVector);
+            console.log('userScores:', userScores);
+            
+            const result = calculateResult();
+            console.log('result:', result);
+            
+            if (!result) {
+                console.error('calculateResult returned null!');
+                alert('计算结果失败，请检查控制台');
+                return;
+            }
+            
+            document.getElementById('result-type').textContent = result.code;
+            document.getElementById('result-name').textContent = result.name;
+            document.getElementById('result-desc').textContent = result.description;
+            
+            // 设置图片 - 使用 Emoji 作为占位图
+            const imageContainer = document.getElementById('result-image');
+            const typeEmojis = {
+                'SBLS': '🔥', 'YAGO': '🥘', 'AMDR': '🪉', 'PRKA': '✨',
+                'INFJ': '🌙', 'INFP': '🎨', 'ENFJ': '✨', 'ENFP': '🎭',
+                'ISTJ': '📋', 'ISFJ': '🛡️', 'ESTJ': '🏢', 'ESFJ': '🎀',
+                'ISTP': '🔧', 'ISFP': '🌸', 'ESTP': '🎢', 'ESFP': '🎪'
+            };
+            const emoji = typeEmojis[result.code] || '🎯';
+            imageContainer.innerHTML = `<div style="font-size: 80px;">${emoji}</div>`;
+            
+            const chartContainer = document.getElementById('dimension-chart');
+            chartContainer.innerHTML = '';
+            
+            DIMENSIONS.forEach((dim, i) => {
+                const rawScore = Math.max(-10, Math.min(10, userScores[i]));
+                const displayScore = Math.max(0, Math.min(20, rawScore + 10));
+                const percentage = (displayScore / 20) * 100;
+                const isNegative = rawScore < 0;
+                const item = document.createElement('div');
+                item.className = 'dimension-item';
+                item.innerHTML = `
+                    <div class="dimension-label">
+                        <span class="dimension-name">${dim.name}</span>
+                        <span class="dimension-value" style="color: ${isNegative ? '#64748b' : 'var(--primary)'}">${rawScore}分</span>
+                    </div>
+                    <div class="dimension-bar">
+                        <div class="dimension-fill" style="width: 0%"></div>
+                    </div>
+                `;
+                chartContainer.appendChild(item);
+                
+                setTimeout(() => {
+                    const fill = item.querySelector('.dimension-fill');
+                    fill.style.width = `${percentage}%`;
+                }, 100);
+            });
+            
+            showPage('page-result');
+        }
+
+        function calculateResult() {
+            let bestMatch = null;
+            let bestScore = -Infinity;
+            
+            console.log('Calculating with userVector:', userVector);
+            console.log('All personality types:', Object.keys(PERSONALITY_TYPES));
+            
+            for (const code in PERSONALITY_TYPES) {
+                const personality = PERSONALITY_TYPES[code];
+                const similarity = cosineSimilarity(userVector, personality.vector);
+                console.log(code, 'similarity:', similarity);
+                
+                if (similarity > bestScore) {
+                    bestScore = similarity;
+                    bestMatch = personality;
+                }
+            }
+            
+            // 如果所有相似度都是 0（userVector 为全 0），返回一个默认人格
+            if (bestMatch === null) {
+                console.log('No best match found, returning default');
+                bestMatch = PERSONALITY_TYPES['INFP'];
+            }
+            
+            console.log('Best match:', bestMatch.name, 'score:', bestScore);
+            return bestMatch;
+        }
+
+        function cosineSimilarity(vecA, vecB) {
+            if (!vecA || !vecB || vecA.length === 0 || vecB.length === 0) {
+                return 0;
+            }
+            
+            const len = Math.min(vecA.length, vecB.length);
+            let dotProduct = 0;
+            let normA = 0;
+            let normB = 0;
+            
+            for (let i = 0; i < len; i++) {
+                const a = Number(vecA[i]) || 0;
+                const b = Number(vecB[i]) || 0;
+                dotProduct += a * b;
+                normA += a * a;
+                normB += b * b;
+            }
+            
+            normA = Math.sqrt(normA);
+            normB = Math.sqrt(normB);
+            
+            if (normA === 0 || normB === 0) return 0;
+            
+            return dotProduct / (normA * normB);
+        }
+
+        function goHome() {
+            showPage('page-home');
+        }
+
+        function openModal() {
+            document.getElementById('modal-confirm').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-confirm').classList.remove('active');
+        }
+
+        function confirmSubmit() {
+            closeModal();
+            showResult();
+        }
+
+        // ==================== 初始化 ====================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('page-home');
+        });
+    </script>
+</body>
+</html>
